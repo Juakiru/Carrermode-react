@@ -1,0 +1,87 @@
+/* Fondo de la pagina web */
+.app-container {
+    background-color: #080820;
+    min-height: 100vh;
+    padding: 24px;
+    font-family: system-ui, sans-serif;
+  }
+  
+  .content-box {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  /* Encabezado */
+  .header-card {
+    background-color: #268b83;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-bar {
+    display: flex;             /* Coloca los elementos uno al lado del otro */
+    flex-direction: row;       /* Alineación horizontal: logo a la izquierda, texto a la derecha */
+    align-items: center;       /* Centra verticalmente el logo con respecto al texto */
+    gap: 20px;                 /* Espacio de separación entre el logo y el texto */
+    text-align: left;          /* Alinea el texto hacia la izquierda */
+    padding: 16px;
+  }
+  
+ /* Contenedor circular del logo */
+.avatar {
+    width: 64px !important;            /* Ancho fijo estricto de la burbuja */
+    height: 64px !important;           /* Alto fijo estricto de la burbuja */
+    min-width: 64px !important;        /* Evita que flexbox lo aplaste */
+    max-width: 64px !important;        /* Evita que se ensanche */
+    border-radius: 50%;                /* Lo transforma en círculo */
+    background-color: #1e293b;         /* Fondo oscuro para que resalte el logo */
+    border: 2px solid #334155;         /* Borde gris sutil */
+    overflow: hidden !important;       /* Corta cualquier parte de la imagen que intente salir */
+    display: flex;                     /* Centra la imagen interna */
+    align-items: center;               /* Centrado vertical */
+    justify-content: center;           /* Centrado horizontal */
+    padding: 6px;                      /* Espacio para que el logo respire */
+    flex-shrink: 0;                    /* Impide deformaciones si la pantalla cambia de tamaño */
+  }
+  
+  /* Imagen dentro del avatar */
+  .avatar-img {
+    width: 100% !important;            /* Se limita al 100% del contenedor (.avatar) */
+    height: 100% !important;           /* Se limita al 100% del alto del contenedor */
+    max-width: 100% !important;        /* Barrera máxima de ancho */
+    max-height: 100% !important;       /* Barrera máxima de alto */
+    object-fit: contain !important;    /* Mantiene las proporciones originales sin estirar */
+    display: block;                    /* Quita espacios extra en línea */
+  }
+
+  .profile-text h2 {
+    margin: 0;
+    color: #c1cad3;
+    font-size: 1.3rem;
+  }
+  
+  .profile-text p {
+    margin: 4px 0 0 0;
+    color: #020408;
+    font-size: 0.9rem;
+  }
+  
+  /* Fila de botones de ligas */
+  .league-list {
+ 
+  }
+  
+  .league-btn {
+ 
+  }
+  
+  /* Panel principal */
+  .main-panel {
+    background-color: #dfcccc;
+    padding: 24px;
+    border-radius: 16px;
+    text-align: center;
+    color: #f8fafc;
+    font-weight: bold;
+  }
