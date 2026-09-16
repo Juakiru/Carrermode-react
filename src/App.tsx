@@ -1,122 +1,90 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+// 1. COMPONENTE PRINCIPAL (Padre)
+export default function App() {
+  const [ligaSeleccionada, setLigaSeleccionada] = useState('premier');
+
+  // Buscar la información de la liga activa
+  const ligaActual = LIGAS.find((l) => l.id === ligaSeleccionada);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-container">
+      <div className="content-box">
+        {/* Encabezado con avatar y botones */}
+        <Encabezado
+          ligaActiva={ligaSeleccionada}
+          alCambiarLiga={setLigaSeleccionada}
+        />
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* Panel de contenido central */}
+        <main className="main-panel">
+          <p style={{ color: '#94a3b8' }}>Liga seleccionada:</p>
+          <h1 style={{ color: ligaActual?.color, margin: '8px 0' }}>
+            {ligaActual?.nombre}
+          </h1>
+        </main>
+      </div>
+    </div>
+  );
 }
 
-export default App
+// 2. COMPONENTE INTERMEDIO: Encabezado, perfil y lista horizontal
+function Encabezado({ ligaActiva, alCambiarLiga }) {
+  return (
+    <header className="header-card">
+      <div className="profile-bar">
+        <div className="avatar">⚽</div>
+        <div className="profile-text">
+          <h2>Gestión de Torneos Deportivos</h2>
+          <p>Equipos, partidos, resultados y tabla de posiciones</p>
+        </div>
+      </div>
+
+      <div className="league-list">
+        {LIGAS.map((liga) => (
+          <BotonLiga
+            key={liga.id}
+            liga={liga}
+            estaSeleccionada={ligaActiva === liga.id}
+            alHacerClick={alCambiarLiga}
+          />
+        ))}
+      </div>
+    </header>
+  );
+}
+
+// 3. COMPONENTE HIJO: Botón individual con hover y color dinámico
+function BotonLiga({ liga, estaSeleccionada, alHacerClick }) {
+  const [hover, setHover] = useState(false);
+
+  const estiloDinamico = {
+    backgroundColor: hover || estaSeleccionada ? liga.color : '',
+    color: hover || estaSeleccionada ? '#ffffff' : '',
+    borderColor: hover || estaSeleccionada ? liga.color : '',
+  };
+
+  return (
+    <button
+      className="league-btn"
+      style={estiloDinamico}
+      onClick={() => alHacerClick(liga.id)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {liga.nombre}
+    </button>
+  );
+}
+
+// 4. DATOS ESTÁTICOS DE APOYO
+const LIGAS = [
+  { id: 'premier', nombre: 'Premier League', color: '#3d195b' },
+  { id: 'laliga', nombre: 'LaLiga', color: '#ee1522' },
+  { id: 'seriea', nombre: 'Serie A', color: '#008fd7' },
+  { id: 'bundesliga', nombre: 'Bundesliga', color: '#d3010c' },
+  { id: 'ligue1', nombre: 'Ligue 1', color: '#091c3e' },
+  { id: 'champions', nombre: 'Champions League', color: '#001438' },
+  { id: 'chilena', nombre: 'Liga Chilena', color: '#002b7f' },
+];
