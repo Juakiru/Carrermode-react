@@ -67,14 +67,6 @@
     font-size: 0.9rem;
   }
   
-  /* Fila de botones de ligas */
-  .league-list {
- 
-  }
-  
-  .league-btn {
- 
-  }
   
   /* Panel principal */
   .main-panel {
@@ -85,3 +77,106 @@
     color: #f8fafc;
     font-weight: bold;
   }
+
+  /* Contenedor de toda la sección de partidos */
+.matches-section {
+  width: 100%;                  /* Ocupa el ancho total del panel central */
+  margin-top: 24px;             /* Separa la sección respecto a la barra de botones */
+}
+
+/* Título de la sección */
+.section-title {
+  color: #1e293b;               /* Color de texto oscuro para buen contraste */
+  font-size: 1.25rem;           /* Tamaño mediano destacado */
+  margin-bottom: 16px;          /* Espacio entre el título y las tarjetas */
+  text-align: left;             /* Alinea el texto a la izquierda */
+}
+
+/* Contenedor en cuadrícula o lista de partidos */
+.matches-grid {
+  display: flex;                /* Organiza las tarjetas en una columna */
+  flex-direction: column;       /* Una tarjeta debajo de la otra */
+  gap: 12px;                    /* Separación de 12px entre cada tarjeta */
+}
+
+/* Tarjeta individual de partido */
+.match-card {
+  display: flex;                /* Distribución en fila (horizontal) */
+  align-items: center;          /* Centra verticalmente los nombres y el marcador */
+  justify-content: space-between;/* Deja el local a la izq, marcador al centro, visita a la der */
+  background-color: #ffffff;    /* Fondo blanco para que resalte sobre el fondo crema */
+  padding: 14px 20px;           /* Relleno interno de la tarjeta */
+  border-radius: 12px;          /* Bordes curvos modernos */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06); /* Sombra suave para dar profundidad */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición para efecto hover */
+}
+
+/* Efecto al pasar el cursor sobre la tarjeta */
+.match-card:hover {
+  transform: translateY(-2px);  /* Eleva la tarjeta 2 píxeles */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12); /* Acentúa la sombra */
+}
+
+/* Bloques de los equipos (local y visita) */
+.match-team {
+  flex: 1;                      /* Ambos ocupan el mismo espacio proporcional */
+}
+
+.match-team.local {
+  text-align: right;            /* El equipo local se alinea pegado al marcador */
+}
+
+.match-team.visita {
+  text-align: left;             /* El equipo visita se alinea pegado al marcador */
+}
+
+.team-name {
+  font-weight: 600;             /* Texto seminegrita para que los nombres resalten */
+  color: #0f172a;               /* Color casi negro para lectura nítida */
+}
+
+/* Columna central (marcador y estado) */
+.match-score {
+  display: flex;                /* Centra el marcador y el texto inferior */
+  flex-direction: column;       /* Pone el estado ("Finalizado") debajo del número */
+  align-items: center;          /* Centrado horizontal */
+  min-width: 120px;             /* Ancho fijo para mantener la simetría entre filas */
+}
+
+/* Insignia del marcador */
+.score-badge {
+  font-size: 1rem;              /* Tamaño legible */
+  font-weight: bold;            /* Números en negrita */
+  padding: 4px 12px;            /* Espacio alrededor del número */
+  border-radius: 8px;           /* Borde redondeado tipo pastilla */
+}
+
+/* Estilo cuando el partido ya concluyó */
+.score-badge.finalizado {
+  background-color: #f1f5f9;    /* Fondo gris claro neutro */
+  color: #0f172a;               /* Color del texto del marcador */
+  border: 1px solid #cbd5e1;    /* Borde fino */
+}
+
+/* Estilo cuando el partido no se ha jugado */
+.score-badge.por-jugar {
+  background-color: #e2e8f0;    /* Fondo tenue */
+  color: #64748b;               /* Gris suave para el "VS" */
+  font-size: 0.85rem;           /* Ligeramente más chico que el marcador */
+}
+
+/* Texto de estado ('Finalizado' / 'Por jugar') */
+.match-status {
+  font-size: 0.72rem;           /* Texto pequeño */
+  color: #94a3b8;               /* Gris discreto */
+  margin-top: 4px;              /* Separación con el marcador */
+  text-transform: uppercase;    /* Letras mayúsculas para look deportivo */
+  letter-spacing: 0.5px;        /* Espaciado elegante entre letras */
+}
+
+/* Mensaje cuando no hay nada seleccionado */
+.empty-message {
+  color: #64748b;               /* Color gris intermedio */
+  margin-top: 24px;             /* Separación con respecto a los botones */
+  font-style: italic;           /* Texto en cursiva */
+}

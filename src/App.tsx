@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { baseDeDatos } from './data.js';
 
 // 1. COMPONENTE PRINCIPAL (Padre)
 export default function App() {
@@ -8,10 +9,14 @@ export default function App() {
   // Buscar los datos de la liga activa
   const ligaActual = LIGAS.find((l) => l.id === ligaSeleccionada);
 
+  // Obtiene los datos (equipos y partidos) de la liga activa desde data.js
+  const datosLiga = ligaSeleccionada ? baseDeDatos[ligaSeleccionada] : null;
+
   // Función toggle: si es la misma, la pone en null; si es otra, pone la nueva
   const alternarLiga = (id: string) => {
     setLigaSeleccionada((prev) => (prev === id ? null : id));
   };
+  
 
   return (
     <div className="app-container">
@@ -36,11 +41,26 @@ export default function App() {
           />
           ))}
           </div>
-
-        <p style={{ color: '#000000', marginTop: '20px' }}>Liga seleccionada:</p>
+          {/* 2. Bloque de Liga Seleccionada */}
+          <p style={{ color: '#000000', marginTop: '20px' }}>Liga seleccionada:</p>
         <h1 style={{ color: ligaActual?.color, margin: '8px 0' }}>
           {ligaActual?.nombre}
         </h1>
+          {/* 3. Lista de partidos */}
+          {datosLiga ? (
+            <div className="matches-section">
+              <h2 className="section-title">Partidos de {ligaActual?.nombre}</h2>
+              <div className="matches-grid">
+                {datosLiga.partidos.map((partido) => (
+                  <TarjetaPartido key={partido.id} partido={partido} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="empty-message">
+              Selecciona una competición arriba para ver sus partidos y resultados.
+            </p>
+          )}
       </main>
       </div>
     </div>
@@ -90,6 +110,36 @@ function BotonLiga({ liga, estaSeleccionada, alHacerClick }) {
   );
 }
 
+// Componente que representa un único partido
+function TarjetaPartido({ partido }) {
+  const finalizado = partido.estado === 'Finalizado';
+
+  return (
+    <div className="match-card">
+      {/* Equipo Local */}
+      <div className="match-team local">
+        <span className="team-name">{partido.local}</span>
+      </div>
+
+      {/* Marcador o VS central */}
+      <div className="match-score">
+        {finalizado ? (
+          <span className="score-badge finalizado">
+            {partido.golesLocal} - {partido.golesVisita}
+          </span>
+        ) : (
+          <span className="score-badge por-jugar">VS</span>
+        )}
+        <span className="match-status">{partido.estado}</span>
+      </div>
+
+      {/* Equipo Visita */}
+      <div className="match-team visita">
+        <span className="team-name">{partido.visita}</span>
+      </div>
+    </div>
+  );
+}
 
 
 
