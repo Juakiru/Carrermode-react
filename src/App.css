@@ -180,3 +180,79 @@
   margin-top: 24px;             /* Separación con respecto a los botones */
   font-style: italic;           /* Texto en cursiva */
 }
+/* --- NUEVO CSS PARA LA TABLA Y EL LAYOUT --- */
+
+/* Grid para poner la tabla a la izquierda y partidos a la derecha (en pantallas grandes) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 3fr 2fr; /* La tabla ocupa más espacio que los partidos */
+  }
+}
+
+.loading-spinner {
+  margin: 50px 0;
+  color: #1e293b;
+}
+
+/* Estilos de tabla 
+.standings-section {
+  width: 100%;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+}
+
+.promiedos-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.promiedos-table th {
+  background-color: #1e293b;
+  color: white;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.promiedos-table td {
+  padding: 8px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.promiedos-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+.promiedos-table .text-left { text-align: left; }
+.promiedos-table .font-bold { font-weight: 700; }
+.promiedos-table .text-blue { color: #2563eb; font-size: 1rem; }
+
+/* Requisito de la Rúbrica: Resaltar Equipo Favorito */
+.promiedos-table tr.fila-favorito td {
+  background-color: #fef08a !important; /* Amarillo resaltado */
+  color: #854d0e;
+}
+
+.hint-text {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 8px;
+  text-align: right;
+}

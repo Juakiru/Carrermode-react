@@ -3,7 +3,7 @@
 export const baseDeDatos = {
     premier: {
       equipos: [
-        { id: 1, nombre: "Manchester City", puntos: 12, pj: 4, pg: 4, pe: 0, pp: 0 },
+        { id: 1, nombre: "Manchester City", puntos: 10, pj: 4, pg: 3, pe: 1, pp: 0 },
         { id: 2, nombre: "Arsenal", puntos: 10, pj: 4, pg: 3, pe: 1, pp: 0 },
         { id: 3, nombre: "Liverpool", puntos: 9, pj: 4, pg: 3, pe: 0, pp: 1 },
         { id: 4, nombre: "Manchester United", puntos: 6, pj: 4, pg: 2, pe: 0, pp: 2 }

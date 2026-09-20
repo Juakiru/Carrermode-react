@@ -1,59 +1,80 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { baseDeDatos } from './data.js';
 
 // 1. COMPONENTE PRINCIPAL (Padre)
 export default function App() {
-  const [ligaSeleccionada, setLigaSeleccionada] = useState<string | null>(null);
+  const [ligaSeleccionada, setLigaSeleccionada] = useState(null);
+// Memoria del componente
+  const [datosLiga, setDatosLiga] = useState(null);
+  const [cargando, setCargando] = useState(false);
 
-  // Buscar los datos de la liga activa
   const ligaActual = LIGAS.find((l) => l.id === ligaSeleccionada);
 
-  // Obtiene los datos (equipos y partidos) de la liga activa desde data.js
-  const datosLiga = ligaSeleccionada ? baseDeDatos[ligaSeleccionada] : null;
+  // EFECTO DE CARGA ASÍNCRONA 
+  useEffect(() => {
+    if (ligaSeleccionada) {
+      setCargando(true); // Encendemos el estado de carga
+      
+      const temporizador = setTimeout(() => {
+        setDatosLiga(baseDeDatos[ligaSeleccionada]); // Cargamos los datos después de 1.5s
+        setCargando(false); // Apagamos la carga
+      }, 1500);
 
-  // Función toggle: si es la misma, la pone en null; si es otra, pone la nueva
-  const alternarLiga = (id: string) => {
+      return () => clearTimeout(temporizador); // Limpieza
+    } else {
+      setDatosLiga(null); // Si no hay liga, vaciamos los datos
+    }
+  }, [ligaSeleccionada]);
+
+  const alternarLiga = (id) => {
     setLigaSeleccionada((prev) => (prev === id ? null : id));
   };
-  
 
   return (
     <div className="app-container">
       <div className="content-box">
-        {/* Encabezado con avatar y botones */}
         <Encabezado
           logoActual={ligaActual ? ligaActual.logo : '/logos/balon.png'}
           ligaActiva={ligaSeleccionada}
           alCambiarLiga={alternarLiga}
         />
 
-        {/* Panel de contenido central */}
         <main className="main-panel">
-          {/* Los botones aquí adentro */}
           <div className="league-list">
             {LIGAS.map((liga) => (
-            <BotonLiga
-            key={liga.id}
-            liga={liga}
-            estaSeleccionada={ligaSeleccionada === liga.id}
-            alHacerClick={alternarLiga}
-          />
-          ))}
+              <BotonLiga
+                key={liga.id}
+                liga={liga}
+                estaSeleccionada={ligaSeleccionada === liga.id}
+                alHacerClick={alternarLiga}
+              />
+            ))}
           </div>
-          {/* 2. Bloque de Liga Seleccionada */}
+
           <p style={{ color: '#000000', marginTop: '20px' }}>Liga seleccionada:</p>
-        <h1 style={{ color: ligaActual?.color, margin: '8px 0' }}>
-          {ligaActual?.nombre}
-        </h1>
-          {/* 3. Lista de partidos */}
-          {datosLiga ? (
-            <div className="matches-section">
-              <h2 className="section-title">Partidos de {ligaActual?.nombre}</h2>
-              <div className="matches-grid">
-                {datosLiga.partidos.map((partido) => (
-                  <TarjetaPartido key={partido.id} partido={partido} />
-                ))}
+          <h1 style={{ color: ligaActual?.color, margin: '8px 0', minHeight: '40px' }}>
+            {ligaActual?.nombre}
+          </h1>
+
+          {/* RENDERIZADO CONDICIONAL DE CARGA */}
+          {cargando ? (
+            <div className="loading-spinner">
+              <h2>Cargando datos de {ligaActual?.nombre}... ⚽</h2>
+            </div>
+          ) : datosLiga ? (
+            <div className="dashboard-grid">
+              {/* Nueva sección: Tabla de Posiciones */}
+              <TablaPosiciones equipos={datosLiga.equipos} />
+
+              {/* Tu sección de partidos actual */}
+              <div className="matches-section">
+                <h2 className="section-title">Partidos</h2>
+                <div className="matches-grid">
+                  {datosLiga.partidos.map((partido) => (
+                    <TarjetaPartido key={partido.id} partido={partido} />
+                  ))}
+                </div>
               </div>
             </div>
           ) : (
@@ -61,7 +82,7 @@ export default function App() {
               Selecciona una competición arriba para ver sus partidos y resultados.
             </p>
           )}
-      </main>
+        </main>
       </div>
     </div>
   );
@@ -140,8 +161,55 @@ function TarjetaPartido({ partido }) {
     </div>
   );
 }
+// 5.Tabla de Posiciones 
+function TablaPosiciones({ equipos }) {
+  // Estado local para el equipo favorito
+  const [idFavorito, setIdFavorito] = useState(null);
 
-
+  return (
+    <div className="standings-section">
+      <h2 className="section-title">Posiciones</h2>
+      <div className="table-responsive">
+        <table className="promiedos-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th className="text-left">Equipo</th>
+              <th>Pts</th>
+              <th>PJ</th>
+              <th>PG</th>
+              <th>PE</th>
+              <th>PP</th>
+            </tr>
+          </thead>
+          <tbody>
+            {equipos.map((equipo, index) => {
+              const esFavorito = idFavorito === equipo.id;
+              
+              return (
+                <tr 
+                  key={equipo.id} 
+                  onClick={() => setIdFavorito(equipo.id)}
+                  className={esFavorito ? 'fila-favorito' : ''}
+                  title="Haz clic para marcar como favorito"
+                >
+                  <td>{index + 1}</td>
+                  <td className="text-left font-bold">{equipo.nombre}</td>
+                  <td className="font-bold text-blue">{equipo.puntos}</td>
+                  <td>{equipo.pj}</td>
+                  <td>{equipo.pg}</td>
+                  <td>{equipo.pe}</td>
+                  <td>{equipo.pp}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p className="hint-text">💡 Haz clic en un equipo para marcarlo como favorito</p>
+    </div>
+  );
+}
 
 // 4. DATOS ESTÁTICOS DE APOYO
 const LIGAS = [
