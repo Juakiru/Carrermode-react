@@ -14,8 +14,18 @@ export const baseDeDatos = {
       ]
     },
     laliga: {
-      equipos: [
-        { id: 5, nombre: "Real Madrid", puntos: 15, pj: 5, pg: 5, pe: 0, pp: 0 },
+        equipos: [
+          { 
+            id: 5, 
+            nombre: "Real Madrid", 
+            puntos: 15, pj: 5, pg: 5, pe: 0, pp: 0,
+            plantilla: {
+              arqueros: ["Thibaut Courtois", "Andriy Lunin"],
+              defensas: ["Antonio Rüdiger", "Dani Carvajal", "Éder Militão"],
+              mediocentros: ["Jude Bellingham", "Luka Modrić", "Fede Valverde", "Aurélien Tchouaméni"],
+              delanteros: ["Vinícius Júnior", "Rodrygo", "Kylian Mbappé"]
+            }
+          },
         { id: 6, nombre: "Barcelona", puntos: 13, pj: 5, pg: 4, pe: 1, pp: 0 },
         { id: 7, nombre: "Atlético Madrid", puntos: 9, pj: 5, pg: 2, pe: 3, pp: 0 },
         { id: 8, nombre: "Sevilla", puntos: 4, pj: 5, pg: 1, pe: 1, pp: 3 }
