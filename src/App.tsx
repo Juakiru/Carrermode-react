@@ -4,9 +4,9 @@ import { baseDeDatos } from './data.js';
 
 // 1. DATOS ESTÁTICOS DECLARADOS ANTES DE USARSE
 const DEPORTES = [
-  { id: 'futbol', nombre: '⚽ Fútbol' },
-  { id: 'basquet', nombre: '🏀 Básquetbol' },
-  { id: 'volley', nombre: '🏐 Vóleibol' },
+  { id: 'futbol', nombre: ' Fútbol', logo: '/logos/balon.png' },
+  { id: 'basquet', nombre: ' Básquetbol', logo: '/logos/logobasquet.png' },
+  { id: 'volley', nombre: ' Vóleibol', logo: '/logos/logovolei.png' },
 ];
 
 const LIGAS = [
@@ -14,7 +14,7 @@ const LIGAS = [
   { id: 'laliga', deporte: 'futbol', nombre: 'LaLiga', color: '#ee1522', logo: '/logos/Laliga.png' },
   { id: 'seriea', deporte: 'futbol', nombre: 'Serie A', color: '#008fd7', logo: '/logos/SerieA.png' },
   { id: 'bundesliga', deporte: 'futbol', nombre: 'Bundesliga', color: '#d3010c', logo: '/logos/Bundesliga.png' },
-  { id: 'ligue1', deporte: 'futbol', nombre: 'Ligue 1', color: '#091c3e', logo: '/logos/ligue1.png' },
+  { id: 'ligue1', deporte: 'futbol', nombre: 'Ligue 1', color: '#0ea5e9', logo: '/logos/ligue1.png' },
   { id: 'champions', deporte: 'futbol', nombre: 'Champions League', color: '#001438', logo: '/logos/Champions.png' },
   { id: 'chilena', deporte: 'futbol', nombre: 'Liga Chilena', color: '#002b7f', logo: '/logos/Ligachilena.png' },
   { id: 'nba', deporte: 'basquet', nombre: 'NBA', color: '#1d428a', logo: '/logos/logonba.png' },
@@ -30,11 +30,15 @@ export default function App() {
   const [datosLiga, setDatosLiga] = useState<any>(null);
   const [cargando, setCargando] = useState(false);
 
-  // Estado para la vista de Detalle del Equipo
+  // Estado para la vista de Detalle del Equipo / Plantilla
   const [equipoSeleccionado, setEquipoSeleccionado] = useState<any>(null);
 
   const ligasVisibles = LIGAS.filter((l) => l.deporte === deporteSeleccionado);
   const ligaActual = LIGAS.find((l) => l.id === ligaSeleccionada);
+  const deporteActual = DEPORTES.find((d) => d.id === deporteSeleccionado);
+
+  // Logo dinámico: Si hay liga elegida -> logo de la liga; si no -> logo del deporte activo
+  const logoEncabezado = ligaActual?.logo || deporteActual?.logo || '/logos/balon.png';
 
   useEffect(() => {
     if (ligaSeleccionada) {
@@ -49,22 +53,26 @@ export default function App() {
       return () => clearTimeout(temporizador);
     } else {
       setDatosLiga(null);
+      setCargando(false);
     }
   }, [ligaSeleccionada]);
 
   const cambiarDeporte = (idDeporte: string) => {
     setDeporteSeleccionado(idDeporte);
     setLigaSeleccionada(null);
+    setEquipoSeleccionado(null);
   };
 
   const alternarLiga = (id: string) => {
     setLigaSeleccionada((prev) => (prev === id ? null : id));
+    setEquipoSeleccionado(null);
   };
 
   return (
     <div className="app-container">
       <div className="content-box">
-        <Encabezado logoActual={ligaActual ? ligaActual.logo : '/logos/balon.png'} />
+        {/* Encabezado con logo reactivo al deporte y liga */}
+        <Encabezado logoActual={logoEncabezado} />
 
         <main className="main-panel">
           <div className="sports-bar">
@@ -114,7 +122,7 @@ export default function App() {
               {equipoSeleccionado ? (
                 <DetalleEquipo 
                   equipo={equipoSeleccionado} 
-                  partidosLiga={datosLiga.partidos} 
+                  partidosLiga={datosLiga?.partidos || []} 
                   alVolver={() => setEquipoSeleccionado(null)} 
                 />
               ) : (
@@ -257,6 +265,129 @@ function TablaPosiciones({ equipos, alVerDetalle }: { equipos: any[], alVerDetal
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+// 7. COMPONENTE DE DETALLE Y PLANTILLA DEL EQUIPO
+function DetalleEquipo({
+  equipo,
+  partidosLiga,
+  alVolver,
+}: {
+  equipo: any;
+  partidosLiga: any[];
+  alVolver: () => void;
+}) {
+  const partidosEquipo = partidosLiga.filter(
+    (p) => p.local === equipo.nombre || p.visita === equipo.nombre
+  );
+
+  const tienePlantilla = equipo.plantilla && typeof equipo.plantilla === 'object';
+
+  return (
+    <div className="team-detail-view" style={{ textAlign: 'left', marginTop: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h2 className="section-title" style={{ margin: 0 }}>
+          Detalle del Club: <span style={{ color: '#00d285' }}>{equipo.nombre}</span>
+        </h2>
+        <button
+          onClick={alVolver}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#334155',
+            color: '#f8fafc',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+          }}
+        >
+          ← Volver a la tabla
+        </button>
+      </div>
+
+      {/* Estadísticas rápidas */}
+      <div style={{ display: 'flex', gap: '15px', marginBottom: '24px', flexWrap: 'wrap' }}>
+        <div style={{ background: '#1a2436', padding: '12px 20px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Puntos: </span>
+          <strong style={{ color: '#00d285', fontSize: '1.2rem' }}>{equipo.puntos}</strong>
+        </div>
+        <div style={{ background: '#1a2436', padding: '12px 20px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Partidos Jugados: </span>
+          <strong style={{ color: '#ffffff' }}>{equipo.pj}</strong>
+        </div>
+        <div style={{ background: '#1a2436', padding: '12px 20px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Victorias: </span>
+          <strong style={{ color: '#38bdf8' }}>{equipo.pg}</strong>
+        </div>
+      </div>
+
+      {/* Plantilla dividida por posiciones según data.js */}
+      <h3 className="section-title" style={{ fontSize: '1.1rem' }}>Plantilla de Jugadores</h3>
+      {tienePlantilla ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '28px' }}>
+          {equipo.plantilla.arqueros && (
+            <div style={{ background: '#1a2436', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <h4 style={{ color: '#38bdf8', margin: '0 0 10px 0', fontSize: '0.9rem', textTransform: 'uppercase' }}> Arqueros</h4>
+              <ul style={{ margin: 0, paddingLeft: '18px', color: '#f1f5f9', fontSize: '0.9rem' }}>
+                {equipo.plantilla.arqueros.map((j: string, idx: number) => (
+                  <li key={idx} style={{ marginBottom: '6px' }}>{j}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {equipo.plantilla.defensas && (
+            <div style={{ background: '#1a2436', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <h4 style={{ color: '#38bdf8', margin: '0 0 10px 0', fontSize: '0.9rem', textTransform: 'uppercase' }}> Defensas</h4>
+              <ul style={{ margin: 0, paddingLeft: '18px', color: '#f1f5f9', fontSize: '0.9rem' }}>
+                {equipo.plantilla.defensas.map((j: string, idx: number) => (
+                  <li key={idx} style={{ marginBottom: '6px' }}>{j}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {equipo.plantilla.mediocentros && (
+            <div style={{ background: '#1a2436', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <h4 style={{ color: '#38bdf8', margin: '0 0 10px 0', fontSize: '0.9rem', textTransform: 'uppercase' }}> Mediocentros</h4>
+              <ul style={{ margin: 0, paddingLeft: '18px', color: '#f1f5f9', fontSize: '0.9rem' }}>
+                {equipo.plantilla.mediocentros.map((j: string, idx: number) => (
+                  <li key={idx} style={{ marginBottom: '6px' }}>{j}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {equipo.plantilla.delanteros && (
+            <div style={{ background: '#1a2436', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <h4 style={{ color: '#38bdf8', margin: '0 0 10px 0', fontSize: '0.9rem', textTransform: 'uppercase' }}> Delanteros</h4>
+              <ul style={{ margin: 0, paddingLeft: '18px', color: '#f1f5f9', fontSize: '0.9rem' }}>
+                {equipo.plantilla.delanteros.map((j: string, idx: number) => (
+                  <li key={idx} style={{ marginBottom: '6px' }}>{j}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      ) : (
+        <p className="empty-message" style={{ textAlign: 'left', marginBottom: '24px' }}>
+          No hay jugadores registrados en la plantilla de este equipo todavía en data.js.
+        </p>
+      )}
+
+      {/* Partidos disputados por este club */}
+      <h3 className="section-title" style={{ fontSize: '1.1rem' }}>Partidos del Club</h3>
+      <div className="matches-grid">
+        {partidosEquipo.length > 0 ? (
+          partidosEquipo.map((partido) => (
+            <TarjetaPartido key={partido.id} partido={partido} />
+          ))
+        ) : (
+          <p className="empty-message" style={{ textAlign: 'left' }}>No hay partidos registrados para este equipo.</p>
+        )}
       </div>
     </div>
   );
