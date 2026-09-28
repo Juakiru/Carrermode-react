@@ -1,258 +1,349 @@
-/* Fondo de la pagina web */
+/* ==========================================================================
+   ESTRUCTURA GENERAL Y CONTENEDOR PRINCIPAL
+   ========================================================================== */
+
+/* Fondo general de la página web */
 .app-container {
-    background-color: #080820;
-    min-height: 100vh;
-    padding: 24px;
-    font-family: system-ui, sans-serif;
-  }
-  
-  .content-box {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  
-  /* Encabezado */
-  .header-card {
-    background-color: #268b83;
-    padding: 24px;
-    border-radius: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .profile-bar {
-    display: flex;             /* Coloca los elementos uno al lado del otro */
-    flex-direction: row;       /* Alineación horizontal: logo a la izquierda, texto a la derecha */
-    align-items: center;       /* Centra verticalmente el logo con respecto al texto */
-    gap: 20px;                 /* Espacio de separación entre el logo y el texto */
-    text-align: left;          /* Alinea el texto hacia la izquierda */
-    padding: 16px;
-  }
-  
- /* Contenedor circular del logo */
+  background-color: #080820;           /* Fondo azul marino muy oscuro */
+  min-height: 100vh;                    /* Asegura que cubra toda la altura de la pantalla */
+  padding: 24px;                        /* Margen interior para que no pegue a los bordes */
+  font-family: system-ui, sans-serif;   /* Tipografía moderna del sistema */
+}
+
+/* Caja central que envuelve la tarjeta de la aplicación */
+.content-box {
+  max-width: 1000px;                    /* Ancho máximo para evitar que se desparrame en monitores grandes */
+  margin: 0 auto;                       /* Centra horizontalmente todo el contenido */
+}
+
+
+/* ==========================================================================
+   ENCABEZADO (HEADER) Y PERFIL DE LA COMPETICIÓN
+   ========================================================================== */
+
+/* Tarjeta contenedora superior */
+.header-card {
+  background-color: #268b83;            /* Color verde azulado institucional */
+  padding: 24px;                        /* Relleno interior cómodo */
+  border-radius: 16px;                  /* Esquinas redondeadas */
+  margin-bottom: 20px;                  /* Separación con el panel de abajo */
+}
+
+/* Barra de alineación horizontal del encabezado */
+.profile-bar {
+  display: flex;                        /* Dispone los elementos en fila */
+  flex-direction: row;                  /* Logo a la izquierda, textos a la derecha */
+  align-items: center;                  /* Centra verticalmente el logo con el texto */
+  gap: 20px;                            /* Separación entre el logo circular y el texto */
+  text-align: left;                     /* Textos cargados a la izquierda */
+  padding: 16px;                        /* Relleno interno adicional */
+}
+
+/* Contenedor circular del logo de la liga o balón */
 .avatar {
-    width: 64px !important;            /* Ancho fijo estricto de la burbuja */
-    height: 64px !important;           /* Alto fijo estricto de la burbuja */
-    min-width: 64px !important;        /* Evita que flexbox lo aplaste */
-    max-width: 64px !important;        /* Evita que se ensanche */
-    border-radius: 50%;                /* Lo transforma en círculo */
-    background-color: #1e293b;         /* Fondo oscuro para que resalte el logo */
-    border: 2px solid #334155;         /* Borde gris sutil */
-    overflow: hidden !important;       /* Corta cualquier parte de la imagen que intente salir */
-    display: flex;                     /* Centra la imagen interna */
-    align-items: center;               /* Centrado vertical */
-    justify-content: center;           /* Centrado horizontal */
-    padding: 6px;                      /* Espacio para que el logo respire */
-    flex-shrink: 0;                    /* Impide deformaciones si la pantalla cambia de tamaño */
-  }
-  
-  /* Imagen dentro del avatar */
-  .avatar-img {
-    width: 100% !important;            /* Se limita al 100% del contenedor (.avatar) */
-    height: 100% !important;           /* Se limita al 100% del alto del contenedor */
-    max-width: 100% !important;        /* Barrera máxima de ancho */
-    max-height: 100% !important;       /* Barrera máxima de alto */
-    object-fit: contain !important;    /* Mantiene las proporciones originales sin estirar */
-    display: block;                    /* Quita espacios extra en línea */
-  }
-
-  .profile-text h2 {
-    margin: 0;
-    color: #c1cad3;
-    font-size: 1.3rem;
-  }
-  
-  .profile-text p {
-    margin: 4px 0 0 0;
-    color: #020408;
-    font-size: 0.9rem;
-  }
-  
-  
-  /* Panel principal */
-  .main-panel {
-    background-color: #dfcccc;
-    padding: 24px;
-    border-radius: 16px;
-    text-align: center;
-    color: #f8fafc;
-    font-weight: bold;
-  }
-
-  /* Contenedor de toda la sección de partidos */
-.matches-section {
-  width: 100%;                  /* Ocupa el ancho total del panel central */
-  margin-top: 24px;             /* Separa la sección respecto a la barra de botones */
+  width: 64px !important;               /* Ancho fijo estricto de la burbuja */
+  height: 64px !important;              /* Alto fijo estricto de la burbuja */
+  min-width: 64px !important;           /* Evita que flexbox aplaste el círculo */
+  max-width: 64px !important;           /* Evita que crezca más allá de 64px */
+  border-radius: 50%;                   /* Lo transforma en un círculo perfecto */
+  background-color: #1e293b;            /* Fondo oscuro contrastante para logos transparentes */
+  border: 2px solid #334155;            /* Borde sutil alrededor de la esfera */
+  overflow: hidden !important;          /* Corta las esquinas de cualquier imagen cuadrada */
+  display: flex;                        /* Habilita centrado del logo interno */
+  align-items: center;                  /* Centrado vertical de la imagen */
+  justify-content: center;              /* Centrado horizontal de la imagen */
+  padding: 6px;                         /* Margen interno para que el logo respire */
+  flex-shrink: 0;                       /* No se deforma si la ventana se encoge */
 }
 
-/* Título de la sección */
+/* Imagen física dentro del avatar */
+.avatar-img {
+  width: 100% !important;               /* Se adapta al ancho del contenedor */
+  height: 100% !important;              /* Se adapta al alto del contenedor */
+  max-width: 100% !important;           /* Tope de anchura */
+  max-height: 100% !important;          /* Tope de altura */
+  object-fit: contain !important;       /* Mantiene la escala real del logo sin deformarlo */
+  display: block;                       /* Quita espacios extra en línea */
+}
+
+/* Título principal del encabezado */
+.profile-text h2 {
+  margin: 0;                            /* Quita márgenes por defecto del navegador */
+  color: #c1cad3;                       /* Gris azulado claro de alta legibilidad */
+  font-size: 1.3rem;                    /* Tamaño de letra mediano */
+}
+
+/* Subtítulo descriptivo */
+.profile-text p {
+  margin: 4px 0 0 0;                    /* Pequeña separación del título */
+  color: #020408;                       /* Color oscuro para contraste firme */
+  font-size: 0.9rem;                    /* Tamaño menor y complementario */
+}
+
+
+/* ==========================================================================
+   PANEL PRINCIPAL DE CONTENIDO
+   ========================================================================== */
+
+/* Contenedor central donde cargan botones, partidos y tablas */
+.main-panel {
+  background-color: #dfcccc;            /* Tono suave crema/rosado de fondo */
+  padding: 24px;                        /* Espacio interior amplio */
+  border-radius: 16px;                  /* Esquinas curvas continuas con el diseño */
+  text-align: center;                   /* Centra textos por defecto */
+  color: #f8fafc;                       /* Texto base claro */
+  font-weight: bold;                    /* Negrita base */
+}
+
+/* Título de las secciones interiores (Partidos, Posiciones) */
 .section-title {
-  color: #1e293b;               /* Color de texto oscuro para buen contraste */
-  font-size: 1.25rem;           /* Tamaño mediano destacado */
-  margin-bottom: 16px;          /* Espacio entre el título y las tarjetas */
-  text-align: left;             /* Alinea el texto a la izquierda */
+  color: #1e293b;                       /* Color grafito oscuro para lectura nítida */
+  font-size: 1.25rem;                   /* Tamaño destacado */
+  margin-bottom: 16px;                  /* Separación con el contenido inferior */
+  text-align: left;                     /* Título orientado a la izquierda */
 }
 
-/* Contenedor en cuadrícula o lista de partidos */
-.matches-grid {
-  display: flex;                /* Organiza las tarjetas en una columna */
-  flex-direction: column;       /* Una tarjeta debajo de la otra */
-  gap: 12px;                    /* Separación de 12px entre cada tarjeta */
-}
-
-/* Tarjeta individual de partido */
-.match-card {
-  display: flex;                /* Distribución en fila (horizontal) */
-  align-items: center;          /* Centra verticalmente los nombres y el marcador */
-  justify-content: space-between;/* Deja el local a la izq, marcador al centro, visita a la der */
-  background-color: #ffffff;    /* Fondo blanco para que resalte sobre el fondo crema */
-  padding: 14px 20px;           /* Relleno interno de la tarjeta */
-  border-radius: 12px;          /* Bordes curvos modernos */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06); /* Sombra suave para dar profundidad */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición para efecto hover */
-}
-
-/* Efecto al pasar el cursor sobre la tarjeta */
-.match-card:hover {
-  transform: translateY(-2px);  /* Eleva la tarjeta 2 píxeles */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12); /* Acentúa la sombra */
-}
-
-/* Bloques de los equipos (local y visita) */
-.match-team {
-  flex: 1;                      /* Ambos ocupan el mismo espacio proporcional */
-}
-
-.match-team.local {
-  text-align: right;            /* El equipo local se alinea pegado al marcador */
-}
-
-.match-team.visita {
-  text-align: left;             /* El equipo visita se alinea pegado al marcador */
-}
-
-.team-name {
-  font-weight: 600;             /* Texto seminegrita para que los nombres resalten */
-  color: #0f172a;               /* Color casi negro para lectura nítida */
-}
-
-/* Columna central (marcador y estado) */
-.match-score {
-  display: flex;                /* Centra el marcador y el texto inferior */
-  flex-direction: column;       /* Pone el estado ("Finalizado") debajo del número */
-  align-items: center;          /* Centrado horizontal */
-  min-width: 120px;             /* Ancho fijo para mantener la simetría entre filas */
-}
-
-/* Insignia del marcador */
-.score-badge {
-  font-size: 1rem;              /* Tamaño legible */
-  font-weight: bold;            /* Números en negrita */
-  padding: 4px 12px;            /* Espacio alrededor del número */
-  border-radius: 8px;           /* Borde redondeado tipo pastilla */
-}
-
-/* Estilo cuando el partido ya concluyó */
-.score-badge.finalizado {
-  background-color: #f1f5f9;    /* Fondo gris claro neutro */
-  color: #0f172a;               /* Color del texto del marcador */
-  border: 1px solid #cbd5e1;    /* Borde fino */
-}
-
-/* Estilo cuando el partido no se ha jugado */
-.score-badge.por-jugar {
-  background-color: #e2e8f0;    /* Fondo tenue */
-  color: #64748b;               /* Gris suave para el "VS" */
-  font-size: 0.85rem;           /* Ligeramente más chico que el marcador */
-}
-
-/* Texto de estado ('Finalizado' / 'Por jugar') */
-.match-status {
-  font-size: 0.72rem;           /* Texto pequeño */
-  color: #94a3b8;               /* Gris discreto */
-  margin-top: 4px;              /* Separación con el marcador */
-  text-transform: uppercase;    /* Letras mayúsculas para look deportivo */
-  letter-spacing: 0.5px;        /* Espaciado elegante entre letras */
-}
-
-/* Mensaje cuando no hay nada seleccionado */
+/* Mensaje que se muestra si no hay competición seleccionada */
 .empty-message {
-  color: #64748b;               /* Color gris intermedio */
-  margin-top: 24px;             /* Separación con respecto a los botones */
-  font-style: italic;           /* Texto en cursiva */
+  color: #64748b;                       /* Gris intermedio suave */
+  margin-top: 24px;                     /* Distancia de los botones superiores */
+  font-style: italic;                   /* Letra cursiva tipo aviso */
 }
-/* --- NUEVO CSS PARA LA TABLA Y EL LAYOUT --- */
 
-/* Grid para poner la tabla a la izquierda y partidos a la derecha (en pantallas grandes) */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-  margin-top: 20px;
+/* Mensaje y animación mientras se simula la carga asíncrona */
+.loading-spinner {
+  margin: 50px 0;                       /* Espacio amplio vertical */
+  color: #1e293b;                       /* Color de texto visible */
 }
+
+
+/* ==========================================================================
+   BARRA SELECTORA DE DEPORTES (FÚTBOL, BÁSQUET, VÓLEY)
+   ========================================================================== */
+
+/* Fila contenedora de los botones de disciplinas deportivas */
+.sports-bar {
+  display: flex;                        /* Coloca las pestañas una al lado de la otra */
+  justify-content: center;              /* Centra horizontalmente la barra de deportes */
+  gap: 12px;                            /* Separación entre cada botón de disciplina */
+  margin-bottom: 16px;                  /* Espacio antes de mostrar las ligas */
+}
+
+/* Botón individual de disciplina deportiva */
+.sport-tab-btn {
+  background-color: #334155;            /* Fondo gris azulado oscuro por defecto */
+  color: #f8fafc;                       /* Texto blanco para buen contraste */
+  border: none;                         /* Sin bordes toscos */
+  padding: 8px 18px;                    /* Relleno interno para dar forma de píldora */
+  border-radius: 20px;                  /* Forma totalmente redondeada tipo pestaña */
+  font-weight: 600;                     /* Texto semi-negrita */
+  font-size: 0.95rem;                   /* Tamaño de letra cómodo */
+  cursor: pointer;                      /* Cambia el cursor a mano para indicar clic */
+  transition: all 0.2s ease;            /* Animación suave al cambiar de color */
+}
+
+/* Efecto al pasar el mouse por encima del deporte */
+.sport-tab-btn:hover {
+  background-color: #475569;            /* Aclara el tono de fondo al pasar el cursor */
+}
+
+/* Estado activo: cuando el deporte está seleccionado actualmente */
+.sport-tab-btn.active {
+  background-color: #0d9488;            /* Verde esmeralda vivo representativo */
+  color: #ffffff;                       /* Texto blanco nítido */
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4); /* Resplandor sutil para destacarlo */
+}
+
+
+/* ==========================================================================
+   SECCIÓN Y TARJETAS DE PARTIDOS
+   ========================================================================== */
+
+/* Contenedor general que agrupa los partidos */
+.matches-section {
+  width: 100%;                          /* Ocupa el 100% del ancho del panel */
+  margin-top: 24px;                     /* Distancia respecto al bloque anterior */
+}
+
+/* Cuadrícula o lista en columna para los partidos */
+.matches-grid {
+  display: flex;                        /* Disposición flexible */
+  flex-direction: column;               /* Apila una tarjeta debajo de la otra */
+  gap: 12px;                            /* Separación constante entre partidos */
+}
+
+/* Tarjeta individual de un partido */
+.match-card {
+  display: flex;                        /* Distribución horizontal */
+  align-items: center;                  /* Centra verticalmente los elementos */
+  justify-content: space-between;       /* Local izquierda, Marcador centro, Visita derecha */
+  background-color: #ffffff;            /* Fondo blanco limpio */
+  padding: 14px 20px;                   /* Relleno interior */
+  border-radius: 12px;                  /* Bordes redondeados modernos */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06); /* Sombra tenue para dar relieve */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición fluida en interacción */
+}
+
+/* Efecto hover: eleva suavemente la tarjeta al interactuar */
+.match-card:hover {
+  transform: translateY(-2px);          /* Eleva la tarjeta 2 píxeles hacia arriba */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12); /* Intensifica la sombra inferior */
+}
+
+/* Bloque proporcional de cada equipo */
+.match-team {
+  flex: 1;                              /* Ocupan exactamente el mismo ancho a cada lado */
+}
+
+/* Alineación para el equipo local */
+.match-team.local {
+  text-align: right;                    /* Texto alineado hacia el centro del marcador */
+}
+
+/* Alineación para el equipo visitante */
+.match-team.visita {
+  text-align: left;                     /* Texto alineado hacia el centro del marcador */
+}
+
+/* Estilo para los nombres de los clubes */
+.team-name {
+  font-weight: 600;                     /* Letra resaltada */
+  color: #0f172a;                       /* Casi negro para máxima nitidez */
+}
+
+/* Contenedor central para el marcador y el estado del partido */
+.match-score {
+  display: flex;                        /* Flexbox vertical */
+  flex-direction: column;               /* Pone el estado debajo del resultado */
+  align-items: center;                  /* Centra ambos elementos horizontalmente */
+  min-width: 120px;                     /* Ancho fijo para que todas las filas queden simétricas */
+}
+
+/* Insignia base del tanteador */
+.score-badge {
+  font-size: 1rem;                      /* Tamaño visible */
+  font-weight: bold;                    /* Negrita llamativa */
+  padding: 4px 12px;                    /* Espacio alrededor del marcador */
+  border-radius: 8px;                   /* Forma de pastilla */
+}
+
+/* Insignia cuando el partido ya finalizó */
+.score-badge.finalizado {
+  background-color: #f1f5f9;            /* Fondo grisáceo neutro */
+  color: #0f172a;                       /* Texto oscuro de resultado */
+  border: 1px solid #cbd5e1;            /* Borde perimetral tenue */
+}
+
+/* Insignia cuando el partido está pendiente de jugarse */
+.score-badge.por-jugar {
+  background-color: #e2e8f0;            /* Fondo gris claro */
+  color: #64748b;                       /* Gris suave para el texto 'VS' */
+  font-size: 0.85rem;                   /* Tamaño ligeramente menor */
+}
+
+/* Texto indicador de estado (ej: 'FINALIZADO', '15:30 HS') */
+.match-status {
+  font-size: 0.72rem;                   /* Letra pequeña */
+  color: #94a3b8;                       /* Color gris tenue discreto */
+  margin-top: 4px;                      /* Separación con la pastilla del marcador */
+  text-transform: uppercase;            /* Todo en mayúsculas estilo tablero deportivo */
+  letter-spacing: 0.5px;                /* Espaciado adicional entre caracteres */
+}
+
+
+/* ==========================================================================
+   TABLA DE POSICIONES
+   ========================================================================== */
+
+/* Bloque envolvente de la tabla */
+.standings-section {
+  width: 100%;                          /* Utiliza todo el ancho permitido */
+}
+
+/* Contenedor con scroll horizontal para móviles */
+.table-responsive {
+  overflow-x: auto;                     /* Habilita barra de desplazamiento horizontal si la pantalla es chica */
+  background: #ffffff;                  /* Fondo blanco para la tabla */
+  border-radius: 8px;                   /* Redondea las esquinas de la tabla */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06); /* Sombra elegante */
+}
+
+/* Tabla estilo deportivo */
+.promiedos-table {
+  width: 100%;                          /* Ocupa el 100% del contenedor */
+  border-collapse: collapse;            /* Elimina espacios dobles entre bordes de celda */
+  color: #0f172a;                       /* Texto oscuro para datos */
+  font-size: 0.9rem;                    /* Tamaño de letra equilibrado */
+}
+
+/* Encabezados de columnas de la tabla (#, PJ, PTS, etc.) */
+.promiedos-table th {
+  background-color: #1e293b;            /* Fondo azul oscuro elegante */
+  color: #ffffff;                       /* Letras blancas para contraste */
+  padding: 8px;                         /* Espacio interior de celda */
+  text-align: center;                   /* Texto centrado en cabecera */
+  font-size: 0.85rem;                   /* Tamaño ligeramente compacto */
+  text-transform: uppercase;            /* Encabezados en mayúsculas */
+}
+
+/* Celdas regulares con los datos de los equipos */
+.promiedos-table td {
+  padding: 8px;                         /* Espaciado interno cómodo */
+  border-bottom: 1px solid #e2e8f0;     /* Línea divisoria suave entre filas */
+  text-align: center;                   /* Números centrados por defecto */
+  cursor: pointer;                      /* Cursor de mano para seleccionar equipo */
+  transition: background-color 0.2s;    /* Cambio de color suave al pasar el cursor */
+}
+
+/* Fila iluminada al pasar el cursor por encima */
+.promiedos-table tr:hover td {
+  background-color: #f8fafc;            /* Gris tenue reactivo al cursor */
+}
+
+/* Clases utilitarias para las celdas de la tabla */
+.promiedos-table .text-left { 
+  text-align: left;                     /* Fuerza alineación a la izquierda para el nombre del club */
+}
+
+.promiedos-table .font-bold { 
+  font-weight: 700;                     /* Aplica negrita reforzada */
+}
+
+.promiedos-table .text-blue { 
+  color: #2563eb;                       /* Azul eléctrico para resaltar los puntos totales */
+  font-size: 1rem;                      /* Ligeramente más grande */
+}
+
+/* Requisito de Rúbrica: Resaltar Equipo Favorito al hacer clic */
+.promiedos-table tr.fila-favorito td {
+  background-color: #fef08a !important; /* Fondo amarillo cálido sobresaliente */
+  color: #854d0e;                       /* Texto café dorado armónico con el amarillo */
+}
+
+/* Texto de ayuda o consejo debajo de la tabla */
+.hint-text {
+  font-size: 0.8rem;                    /* Tamaño pequeño */
+  color: #64748b;                       /* Color gris informativo */
+  margin-top: 8px;                      /* Separación con la tabla */
+  text-align: right;                    /* Alineado a la derecha */
+}
+
+
+/* ==========================================================================
+   DISTRIBUCIÓN RESPONSIVA (GRID ADAPTABLE)
+   ========================================================================== */
+
+/* Contenedor flexible de doble panel en pantallas anchas */
+.dashboard-grid {
+  display: grid;                        /* Modo cuadrícula CSS */
+  grid-template-columns: 1fr;           /* En celulares: 1 sola columna hacia abajo */
+  gap: 30px;                            /* Separación entre elementos */
+  margin-top: 20px;                     /* Distancia superior */
+}
+
+/* Adaptación para pantallas de escritorio (tablets y monitores superiores a 768px) */
 @media (min-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: 3fr 2fr; /* La tabla ocupa más espacio que los partidos */
+    grid-template-columns: 3fr 2fr;     /* La tabla ocupa el 60% y los partidos el 40% del espacio */
   }
-}
-
-.loading-spinner {
-  margin: 50px 0;
-  color: #1e293b;
-}
-
-/* Estilos de tabla 
-.standings-section {
-  width: 100%;
-}
-
-.table-responsive {
-  overflow-x: auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
-}
-
-.promiedos-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #0f172a;
-  font-size: 0.9rem;
-}
-
-.promiedos-table th {
-  background-color: #1e293b;
-  color: white;
-  padding: 8px;
-  text-align: center;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-}
-
-.promiedos-table td {
-  padding: 8px;
-  border-bottom: 1px solid #e2e8f0;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.promiedos-table tr:hover td {
-  background-color: #f8fafc;
-}
-
-.promiedos-table .text-left { text-align: left; }
-.promiedos-table .font-bold { font-weight: 700; }
-.promiedos-table .text-blue { color: #2563eb; font-size: 1rem; }
-
-/* Requisito de la Rúbrica: Resaltar Equipo Favorito */
-.promiedos-table tr.fila-favorito td {
-  background-color: #fef08a !important; /* Amarillo resaltado */
-  color: #854d0e;
-}
-
-.hint-text {
-  font-size: 0.8rem;
-  color: #64748b;
-  margin-top: 8px;
-  text-align: right;
 }
