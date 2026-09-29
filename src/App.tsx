@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+// @ts-ignore
 import { baseDeDatos } from './data';
 
 // 1. DATOS ESTÁTICOS DECLARADOS ANTES DE USARSE
