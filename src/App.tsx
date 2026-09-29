@@ -255,9 +255,17 @@ function TablaPosiciones({ equipos, alVerDetalle }: { equipos: any[], alVerDetal
                 <td>{equipo.pe}</td>
                 <td>{equipo.pp}</td>
                 <td>
+
                   <button 
                     onClick={() => alVerDetalle(equipo)}
-                    style={{ padding: '6px 12px', backgroundColor: '#0284c7', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
+                    style={{ 
+                            padding: '6px 12px', 
+                            backgroundColor: '#0284c7', 
+                            color: '#fff', 
+                            border: 'none', 
+                            borderRadius: '6px', 
+                            cursor: 'pointer', 
+                            fontWeight: 'bold' }}
                   >
                     Ver
                   </button>
