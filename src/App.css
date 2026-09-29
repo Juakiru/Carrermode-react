@@ -16,6 +16,7 @@
 
 /* ENCABEZADO (HEADER) Y PERFIL DE LA COMPETICIÓN */
 
+
 /* Tarjeta contenedora superior que agrupa el logotipo y los títulos */
 .header-card {
   background: linear-gradient(135deg, #131c2e 0%, #1e293b 100%); 
@@ -177,9 +178,7 @@
 }
 
 
-/* ==========================================================================
-   BOTONES DE LIGAS (FILTRADAS SEGÚN DEPORTE)
-   ========================================================================== */
+/* BOTONES DE LIGAS (FILTRADAS SEGÚN DEPORTE) */
 
 /* Contenedor flexible para los botones de las competiciones */
 .league-list {
@@ -215,9 +214,7 @@
 }
 
 
-/* ==========================================================================
-   SECCIÓN Y TARJETAS DE PARTIDOS
-   ========================================================================== */
+/* SECCIÓN Y TARJETAS DE PARTIDOS */
 
 /* Bloque estructural que contiene todo el listado de partidos */
 .matches-section {

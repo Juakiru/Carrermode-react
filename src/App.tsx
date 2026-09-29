@@ -25,26 +25,27 @@ const LIGAS = [
 // 2. COMPONENTE PRINCIPAL (Padre)
 export default function App() {
   const [deporteSeleccionado, setDeporteSeleccionado] = useState('futbol');
+
   const [ligaSeleccionada, setLigaSeleccionada] = useState<string | null>(null);
 
-  // Estados para la carga asíncrona
   const [datosLiga, setDatosLiga] = useState<any>(null);
+
   const [cargando, setCargando] = useState(false);
 
-  // Estado para la vista de Detalle del Equipo / Plantilla
   const [equipoSeleccionado, setEquipoSeleccionado] = useState<any>(null);
 
   const ligasVisibles = LIGAS.filter((l) => l.deporte === deporteSeleccionado);
+
   const ligaActual = LIGAS.find((l) => l.id === ligaSeleccionada);
+
   const deporteActual = DEPORTES.find((d) => d.id === deporteSeleccionado);
 
-  // Logo dinámico: Si hay liga elegida -> logo de la liga; si no -> logo del deporte activo
   const logoEncabezado = ligaActual?.logo || deporteActual?.logo || '/logos/balon.png';
 
   useEffect(() => {
     if (ligaSeleccionada) {
       setCargando(true);
-      setEquipoSeleccionado(null); // Limpiamos el detalle al cambiar de liga
+      setEquipoSeleccionado(null); 
       
       const temporizador = setTimeout(() => {
         setDatosLiga((baseDeDatos as any)[ligaSeleccionada]);
@@ -72,7 +73,6 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="content-box">
-        {/* Encabezado con logo reactivo al deporte y liga */}
         <Encabezado logoActual={logoEncabezado} />
 
         <main className="main-panel">
@@ -309,7 +309,6 @@ function DetalleEquipo({
         </button>
       </div>
 
-      {/* Estadísticas rápidas */}
       <div style={{ display: 'flex', gap: '15px', marginBottom: '24px', flexWrap: 'wrap' }}>
         <div style={{ background: '#1a2436', padding: '12px 20px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
           <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Puntos: </span>
@@ -325,7 +324,6 @@ function DetalleEquipo({
         </div>
       </div>
 
-      {/* Plantilla dividida por posiciones según data.js */}
       <h3 className="section-title" style={{ fontSize: '1.1rem' }}>Plantilla de Jugadores</h3>
       {tienePlantilla ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '28px' }}>
@@ -379,7 +377,6 @@ function DetalleEquipo({
         </p>
       )}
 
-      {/* Partidos disputados por este club */}
       <h3 className="section-title" style={{ fontSize: '1.1rem' }}>Partidos del Club</h3>
       <div className="matches-grid">
         {partidosEquipo.length > 0 ? (
