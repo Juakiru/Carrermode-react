@@ -1,5 +1,3 @@
-// data.js
-
 export const baseDeDatos = {
     premier: {
       equipos: [
