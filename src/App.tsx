@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import { baseDeDatos } from './data.js';
+import { baseDeDatos } from './data';
 
 // 1. DATOS ESTÁTICOS DECLARADOS ANTES DE USARSE
 const DEPORTES = [
